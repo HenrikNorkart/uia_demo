@@ -3,11 +3,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
-sizes   = [1024, 2048, 4096, 8192]
-tflops  = [193.07, 568.25, 711.03, 781.18]
-latency = [0.01, 0.03, 0.19, 1.41]
+sizes   = [1024, 2048, 4096, 8192, 16384, 32768]
+tflops  = [181.15, 557.69, 707.06, 784.88, 741.96, 619.11]
+latency = [0.01, 0.03, 0.19, 1.40, 11.86, 113.66]
 
-labels = [f"{n}×{n}" for n in sizes]
+labels = [f"{n:,}²" for n in sizes]
 
 fig, ax1 = plt.subplots(figsize=(7, 4))
 
