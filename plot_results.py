@@ -27,9 +27,10 @@ for bar, val in zip(bars, tflops):
 
 ax2 = ax1.twinx()
 ax2.plot(labels, latency, color=color_latency, marker="o", linewidth=2, markersize=7, label="Latency (ms)")
-ax2.set_ylabel("Latency (ms)", color=color_latency, fontsize=12)
+ax2.set_ylabel("Latency (ms, log scale)", color=color_latency, fontsize=12)
 ax2.tick_params(axis="y", labelcolor=color_latency)
-ax2.set_ylim(0, max(latency) * 1.4)
+ax2.set_yscale("log")
+ax2.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f"{x:g}"))
 
 lines1, labels1 = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
