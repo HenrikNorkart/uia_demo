@@ -10,22 +10,23 @@ wandb.init(
     config={"device": torch.cuda.get_device_name(0), "dtype": "float16"},
 )
 
-sizes = [1024, 2048, 4096, 8192]
+sizes = [1024, 2048, 4096, 8192, 16384, 32768]
 results = []
 
 for n in sizes:
+    iters = 5 if n >= 16384 else 10
     A = torch.randn(n, n, device="cuda", dtype=torch.float16)
     B = torch.randn(n, n, device="cuda", dtype=torch.float16)
 
-    for _ in range(3):  # warmup
+    for _ in range(2):  # warmup
         _ = A @ B
     torch.cuda.synchronize()
 
     t0 = time.perf_counter()
-    for _ in range(10):
+    for _ in range(iters):
         C = A @ B
     torch.cuda.synchronize()
-    elapsed_ms = (time.perf_counter() - t0) / 10 * 1000
+    elapsed_ms = (time.perf_counter() - t0) / iters * 1000
 
     tflops = (2 * n**3) / (elapsed_ms / 1000) / 1e12
 
